@@ -35,8 +35,8 @@ static const size_t PUBLIC_KEY_SIZE = 33;
 // Uncompressed public key size
 static const size_t UNCOMPRESSED_PUBLIC_KEY_SIZE = 65;
 
-// Maximum bulletproof proof size
-static const size_t MAXIMUM_BULLETPROOF_PROOF_SIZE = 5134;
+// Bulletproof proof size
+static const size_t BULLETPROOF_PROOF_SIZE = 675;
 
 // Bulletproof message size
 static const size_t BULLETPROOF_MESSAGE_SIZE = 20;
@@ -45,7 +45,7 @@ static const size_t BULLETPROOF_MESSAGE_SIZE = 20;
 static const int DECIMAL_NUMBER_BASE = 10;
 
 // Scratch space size
-static const size_t SCRATCH_SPACE_SIZE = 1024 * 1024;
+static const size_t SCRATCH_SPACE_SIZE = 30 * 1024;
 
 // Number of generators
 static const size_t NUMBER_OF_GENERATORS = 256;
@@ -122,8 +122,8 @@ extern "C" bool EMSCRIPTEN_KEEPALIVE isValidCommit(const uint8_t *commit, size_t
 // Is valid single-signer signature
 extern "C" bool EMSCRIPTEN_KEEPALIVE isValidSingleSignerSignature(const uint8_t *signature, size_t signatureSize);
 
-// Maximum bulletproof size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE maximumBulletproofProofSize();
+// Bulletproof size
+extern "C" size_t EMSCRIPTEN_KEEPALIVE bulletproofProofSize();
 
 // Create bulletproof
 extern "C" bool EMSCRIPTEN_KEEPALIVE createBulletproof(uint8_t *proof, char *proofSize, const uint8_t *blind, size_t blindSize, const char *value, const uint8_t *nonce, size_t nonceSize, const uint8_t *privateNonce, size_t privateNonceSize, const uint8_t *extraCommit, size_t extraCommitSize, const uint8_t *message, size_t messageSize);
@@ -457,11 +457,11 @@ bool isValidSingleSignerSignature(const uint8_t *signature, size_t signatureSize
 	return true;
 }
 
-// Maximum bulletproof proof size
-size_t maximumBulletproofProofSize() {
+// Bulletproof proof size
+size_t bulletproofProofSize() {
 
-	// Return maximum bulletproof proof size
-	return MAXIMUM_BULLETPROOF_PROOF_SIZE;
+	// Return bulletproof proof size
+	return BULLETPROOF_PROOF_SIZE;
 }
 
 // Create bulletproof
@@ -506,7 +506,7 @@ bool createBulletproof(uint8_t *proof, char *proofSize, const uint8_t *blind, si
 	}
 	
 	// Check if creating bulletproof failed
-	size_t numericProofSize = MAXIMUM_BULLETPROOF_PROOF_SIZE;
+	size_t numericProofSize = BULLETPROOF_PROOF_SIZE;
 	if(!secp256k1_bulletproof_rangeproof_prove(context, scratchSpace, generators, proof, &numericProofSize, nullptr, nullptr, nullptr, &numericValue, nullptr, &blind, nullptr, 1, &secp256k1_generator_const_h, BITS_PROVEN_PER_RANGE, nonce, privateNonce, extraCommitSize ? extraCommit : nullptr, extraCommitSize, message)) {
 	
 		// Return false
@@ -580,7 +580,7 @@ bool createBulletproofBlindless(uint8_t *proof, char *proofSize, uint8_t *tauX, 
 	}
 	
 	// Check if creating bulletproof blindless failed
-	size_t numericProofSize = MAXIMUM_BULLETPROOF_PROOF_SIZE;
+	size_t numericProofSize = BULLETPROOF_PROOF_SIZE;
 	const secp256k1_pedersen_commitment *commits[] = {
 		&commitData
 	};
@@ -1209,8 +1209,8 @@ bool createSingleSignerSignature(uint8_t *signature, const uint8_t *message, siz
 			return false;
 		}
 		
-		// Check if public nonce is a zero array
-		if(isZeroArray(&publicNonceData, sizeof(publicNonceData))) {
+		// Check if public nonce starts with a zero array
+		if(isZeroArray(&publicNonceData, 256 / BITS_IN_A_BYTE)) {
 		
 			// Return false
 			return false;
@@ -1228,8 +1228,8 @@ bool createSingleSignerSignature(uint8_t *signature, const uint8_t *message, siz
 			return false;
 		}
 		
-		// Check if public nonce total is a zero array
-		if(isZeroArray(&publicNonceTotalData, sizeof(publicNonceTotalData))) {
+		// Check if public nonce total starts with a zero array
+		if(isZeroArray(&publicNonceTotalData, 256 / BITS_IN_A_BYTE)) {
 		
 			// Return false
 			return false;
@@ -1244,8 +1244,8 @@ bool createSingleSignerSignature(uint8_t *signature, const uint8_t *message, siz
 		return false;
 	}
 	
-	// Check if public key is a zero array
-	if(isZeroArray(&publicKeyData, sizeof(publicKeyData))) {
+	// Check if public key starts with a zero array
+	if(isZeroArray(&publicKeyData, 256 / BITS_IN_A_BYTE)) {
 	
 		// Return false
 		return false;
@@ -1346,8 +1346,8 @@ bool verifySingleSignerSignature(const uint8_t *signature, size_t signatureSize,
 		return false;
 	}
 	
-	// Check if signature is a zero array
-	if(isZeroArray(&signatureData, sizeof(signatureData))) {
+	// Check if signature starts with a zero array
+	if(isZeroArray(&signatureData, 256 / BITS_IN_A_BYTE)) {
 	
 		// Return false
 		return false;
@@ -1371,8 +1371,8 @@ bool verifySingleSignerSignature(const uint8_t *signature, size_t signatureSize,
 			return false;
 		}
 		
-		// Check if public nonce is a zero array
-		if(isZeroArray(&publicNonceData, sizeof(publicNonceData))) {
+		// Check if public nonce starts with a zero array
+		if(isZeroArray(&publicNonceData, 256 / BITS_IN_A_BYTE)) {
 		
 			// Return false
 			return false;
@@ -1387,8 +1387,8 @@ bool verifySingleSignerSignature(const uint8_t *signature, size_t signatureSize,
 		return false;
 	}
 	
-	// Check if public key is a zero array
-	if(isZeroArray(&publicKeyData, sizeof(publicKeyData))) {
+	// Check if public key starts with a zero array
+	if(isZeroArray(&publicKeyData, 256 / BITS_IN_A_BYTE)) {
 	
 		// Return false
 		return false;
@@ -1402,8 +1402,8 @@ bool verifySingleSignerSignature(const uint8_t *signature, size_t signatureSize,
 		return false;
 	}
 	
-	// Check if public key total is a zero array
-	if(isZeroArray(&publicKeyTotalData, sizeof(publicKeyTotalData))) {
+	// Check if public key total starts with a zero array
+	if(isZeroArray(&publicKeyTotalData, 256 / BITS_IN_A_BYTE)) {
 	
 		// Return false
 		return false;
@@ -1618,7 +1618,7 @@ bool isZeroArray(void *value, size_t size) {
 
 	// Create zeros buffer
 	uint8_t zerosBuffer[size];
-	memset(zerosBuffer, 0, size);
+	explicit_bzero(zerosBuffer, size);
 	
 	// Return if value is equal to the zero buffer
 	return !memcmp(value, zerosBuffer, size);

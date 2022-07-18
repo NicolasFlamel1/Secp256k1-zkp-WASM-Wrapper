@@ -362,8 +362,8 @@ class Secp256k1Zkp {
 				// Return operation failed
 				return Secp256k1Zkp.OPERATION_FAILED;
 			
-			// Initialize proof to maximum size of bulletproof proof
-			var proof = new Uint8Array(Secp256k1Zkp.instance._maximumBulletproofProofSize());
+			// Initialize proof to size of bulletproof proof
+			var proof = new Uint8Array(Secp256k1Zkp.instance._bulletproofProofSize());
 			
 			// Initialize proof size to size of a max 64-bit integer C string
 			var proofSize = new Uint8Array(Secp256k1Zkp.MAX_64_BIT_INTEGER_C_STRING["length"]);
@@ -459,8 +459,8 @@ class Secp256k1Zkp {
 				// Return operation failed
 				return Secp256k1Zkp.OPERATION_FAILED;
 			
-			// Initialize proof to maximum size of bulletproof proof
-			var proof = new Uint8Array(Secp256k1Zkp.instance._maximumBulletproofProofSize());
+			// Initialize proof to size of bulletproof proof
+			var proof = new Uint8Array(Secp256k1Zkp.instance._bulletproofProofSize());
 			
 			// Initialize proof size to size of a max 64-bit integer C string
 			var proofSize = new Uint8Array(Secp256k1Zkp.MAX_64_BIT_INTEGER_C_STRING["length"]);
