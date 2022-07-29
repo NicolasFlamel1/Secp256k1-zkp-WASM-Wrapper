@@ -39,10 +39,11 @@ class Secp256k1Zkp {
 					delete settings["onAbort"];
 				
 					// Check if initializing failed
-					if(instance._initialize() === Secp256k1Zkp.C_FALSE)
+					if(instance._initialize() === Secp256k1Zkp.C_FALSE) {
 					
 						// Reject error
 						reject("Failed to initialize");
+					}
 					
 					// Otherwise
 					else {
@@ -72,6 +73,19 @@ class Secp256k1Zkp {
 		
 		// Blind switch
 		static blindSwitch(blind, value) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -129,6 +143,19 @@ class Secp256k1Zkp {
 		
 		// Blind sum
 		static blindSum(positiveBlinds, negativeBlinds) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -212,6 +239,19 @@ class Secp256k1Zkp {
 		// Is valid secret key
 		static isValidSecretKey(secretKey) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -247,6 +287,19 @@ class Secp256k1Zkp {
 		
 		// Is valid public key
 		static isValidPublicKey(publicKey) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -284,6 +337,19 @@ class Secp256k1Zkp {
 		// Is valid commit
 		static isValidCommit(commit) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -320,6 +386,19 @@ class Secp256k1Zkp {
 		// Is valid single-signer signature
 		static isValidSingleSignerSignature(signature) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -355,6 +434,19 @@ class Secp256k1Zkp {
 		
 		// Create bulletproof
 		static createBulletproof(blind, value, nonce, privateNonce, extraCommit, message) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -452,6 +544,19 @@ class Secp256k1Zkp {
 		
 		// Create bulletproof blindless
 		static createBulletproofBlindless(tauX, tOne, tTwo, commit, value, nonce, extraCommit, message) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -564,6 +669,19 @@ class Secp256k1Zkp {
 		// Rewind bulletproof
 		static rewindBulletproof(proof, commit, nonce) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -660,6 +778,19 @@ class Secp256k1Zkp {
 		// Verify bulletproof
 		static verifyBulletproof(proof, commit, extraCommit) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -710,6 +841,19 @@ class Secp256k1Zkp {
 		// Public key from secret key
 		static publicKeyFromSecretKey(secretKey) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -757,6 +901,19 @@ class Secp256k1Zkp {
 		
 		// Public key from data
 		static publicKeyFromData(data) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -806,6 +963,19 @@ class Secp256k1Zkp {
 		// Uncompress public key
 		static uncompressPublicKey(publicKey) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -853,6 +1023,19 @@ class Secp256k1Zkp {
 		
 		// Secret key tweak add
 		static secretKeyTweakAdd(secretKey, tweak) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -903,6 +1086,19 @@ class Secp256k1Zkp {
 		// Public key tweak add
 		static publicKeyTweakAdd(publicKey, tweak) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -951,6 +1147,19 @@ class Secp256k1Zkp {
 		
 		// Secret key tweak multiply
 		static secretKeyTweakMultiply(secretKey, tweak) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -1001,6 +1210,19 @@ class Secp256k1Zkp {
 		// Public key tweak multiply
 		static publicKeyTweakMultiply(publicKey, tweak) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -1049,6 +1271,19 @@ class Secp256k1Zkp {
 		
 		// Shared secret key from secret key and public key
 		static sharedSecretKeyFromSecretKeyAndPublicKey(secretKey, publicKey) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -1104,6 +1339,19 @@ class Secp256k1Zkp {
 		
 		// Pedersen commit
 		static pedersenCommit(blind, value) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -1161,6 +1409,19 @@ class Secp256k1Zkp {
 		
 		// Pedersen commit sum
 		static pedersenCommitSum(positiveCommits, negativeCommits) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -1269,6 +1530,19 @@ class Secp256k1Zkp {
 		// Pedersen commit to public key
 		static pedersenCommitToPublicKey(commit) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -1317,6 +1591,19 @@ class Secp256k1Zkp {
 		// Public key to Pedersen commit
 		static publicKeyToPedersenCommit(publicKey) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -1364,6 +1651,19 @@ class Secp256k1Zkp {
 		
 		// Create single-signer signature
 		static createSingleSignerSignature(message, secretKey, secretNonce, publicKey, publicNonce, publicNonceTotal) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -1499,6 +1799,19 @@ class Secp256k1Zkp {
 		// Add single-signer signatures
 		static addSingleSignerSignatures(signatures, publicNonceTotal) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -1580,6 +1893,19 @@ class Secp256k1Zkp {
 		// Verify single-signer signature
 		static verifySingleSignerSignature(signature, message, publicNonce, publicKey, publicKeyTotal, isPartial) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -1658,6 +1984,19 @@ class Secp256k1Zkp {
 		// Single-signer signature from data
 		static singleSignerSignatureFromData(data) {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -1705,6 +2044,19 @@ class Secp256k1Zkp {
 		
 		// Combine public keys
 		static combinePublicKeys(publicKeys) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -1780,6 +2132,19 @@ class Secp256k1Zkp {
 		// Create secret nonce
 		static createSecretNonce() {
 		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
 			
@@ -1833,6 +2198,19 @@ class Secp256k1Zkp {
 		
 		// Create message hash signature
 		static createMessageHashSignature(messageHash, secretKey) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -1900,6 +2278,19 @@ class Secp256k1Zkp {
 		
 		// Verify message hash signature
 		static verifyMessageHashSignature(signature, messageHash, publicKey) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
 		
 			// Check if instance is invalid
 			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
@@ -2066,6 +2457,13 @@ class Secp256k1Zkp {
 		
 			// Return decimal number base
 			return 10;
+		}
+		
+		// Check if initialized interval milliseconds
+		static get CHECK_IF_INITIALIZED_INTERVAL_MILLISECONDS() {
+		
+			// Return check if initialized interval milliseconds
+			return 50;
 		}
 }
 
