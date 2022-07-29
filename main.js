@@ -39,11 +39,10 @@ class Secp256k1Zkp {
 					delete settings["onAbort"];
 				
 					// Check if initializing failed
-					if(instance._initialize() === Secp256k1Zkp.C_FALSE) {
+					if(instance._initialize() === Secp256k1Zkp.C_FALSE)
 					
 						// Reject error
 						reject("Failed to initialize");
-					}
 					
 					// Otherwise
 					else {
@@ -2457,13 +2456,6 @@ class Secp256k1Zkp {
 		
 			// Return decimal number base
 			return 10;
-		}
-		
-		// Check if initialized interval milliseconds
-		static get CHECK_IF_INITIALIZED_INTERVAL_MILLISECONDS() {
-		
-			// Return check if initialized interval milliseconds
-			return 50;
 		}
 }
 
