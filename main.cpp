@@ -206,6 +206,15 @@ extern "C" bool EMSCRIPTEN_KEEPALIVE verifySingleSignerSignature(const uint8_t *
 // Single-signer signature from data
 extern "C" bool EMSCRIPTEN_KEEPALIVE singleSignerSignatureFromData(uint8_t *signature, const uint8_t *data, size_t dataSize);
 
+// Uncompact single-signer signature size
+extern "C" size_t EMSCRIPTEN_KEEPALIVE uncompactSingleSignerSignatureSize();
+
+// Compact single-signer signature
+extern "C" bool EMSCRIPTEN_KEEPALIVE compactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize);
+
+// Uncompact single-signer signature
+extern "C" bool EMSCRIPTEN_KEEPALIVE uncompactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize);
+
 // Combine public keys
 extern "C" bool EMSCRIPTEN_KEEPALIVE combinePublicKeys(uint8_t *result, const uint8_t *publicKeys, size_t publicKeysSizes[], size_t numberOfPublicKeys);
 
@@ -1440,6 +1449,55 @@ bool singleSignerSignatureFromData(uint8_t *signature, const uint8_t *data, size
 
 	// Check if serializing signature failed
 	if(!secp256k1_ecdsa_signature_serialize_compact(context, signature, &signatureData)) {
+	
+		// Return false
+		return false;
+	}
+	
+	// Return true
+	return true;
+}
+
+// Uncompact single-signer signature size
+size_t uncompactSingleSignerSignatureSize() {
+
+	// Return uncompact single-signer signature size
+	return sizeof(secp256k1_ecdsa_signature);
+}
+
+// Compact single-signer signature
+bool compactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize) {
+
+	// Check if signature size is invalid
+	if(signatureSize != sizeof(secp256k1_ecdsa_signature)) {
+	
+		// Return false
+		return false;
+	}
+	
+	// Check if serializing signature failed
+	if(!secp256k1_ecdsa_signature_serialize_compact(context, result, reinterpret_cast<const secp256k1_ecdsa_signature *>(signature))) {
+	
+		// Return false
+		return false;
+	}
+	
+	// Return true
+	return true;
+}
+
+// Uncompact single-signer signature
+bool uncompactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize) {
+
+	// Check if signature size is invalid
+	if(signatureSize != SINGLE_SIGNER_SIGNATURE_SIZE) {
+	
+		// Return false
+		return false;
+	}
+	
+	// Check if unserializing signature failed
+	if(!secp256k1_ecdsa_signature_parse_compact(context, reinterpret_cast<secp256k1_ecdsa_signature *>(result), signature)) {
 	
 		// Return false
 		return false;

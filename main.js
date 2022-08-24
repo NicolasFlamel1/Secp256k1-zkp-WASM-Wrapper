@@ -2041,6 +2041,128 @@ class Secp256k1Zkp {
 			return signature;
 		}
 		
+		// Compact single-signer signature
+		static compactSingleSignerSignature(signature) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
+			// Check if instance is invalid
+			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
+			
+				// Return operation failed
+				return Secp256k1Zkp.OPERATION_FAILED;
+			
+			// Initialize result to size of single-signer signature
+			var result = new Uint8Array(Secp256k1Zkp.instance._singleSignerSignatureSize());
+			
+			// Allocate and fill memory
+			var resultBuffer = Secp256k1Zkp.instance._malloc(signature["length"] * signature["BYTES_PER_ELEMENT"]);
+			
+			var signatureBuffer = Secp256k1Zkp.instance._malloc(signature["length"] * signature["BYTES_PER_ELEMENT"]);
+			Secp256k1Zkp.instance["HEAPU8"].set(signature, signatureBuffer / signature["BYTES_PER_ELEMENT"]);
+			
+			// Check if compacting single-signer signature failed
+			if(Secp256k1Zkp.instance._compactSingleSignerSignature(resultBuffer, signatureBuffer, signature["length"] * signature["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+			
+				// Clear memory
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, signatureBuffer / signature["BYTES_PER_ELEMENT"], signatureBuffer / signature["BYTES_PER_ELEMENT"] + signature["length"]);
+				
+				// Free memory
+				Secp256k1Zkp.instance._free(resultBuffer);
+				Secp256k1Zkp.instance._free(signatureBuffer);
+			
+				// Return operation failed
+				return Secp256k1Zkp.OPERATION_FAILED;
+			}
+			
+			// Get result
+			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(resultBuffer, resultBuffer + result["length"]));
+			
+			// Clear memory
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, signatureBuffer / signature["BYTES_PER_ELEMENT"], signatureBuffer / signature["BYTES_PER_ELEMENT"] + signature["length"]);
+			
+			// Free memory
+			Secp256k1Zkp.instance._free(resultBuffer);
+			Secp256k1Zkp.instance._free(signatureBuffer);
+			
+			// Return result
+			return result;
+		}
+		
+		// Uncompact single-signer signature
+		static uncompactSingleSignerSignature(signature) {
+		
+			// Check if instance doesn't exist
+			if(typeof Secp256k1Zkp.instance === "undefined") {
+			
+				// Set instance
+				Secp256k1Zkp.instance = secp256k1Zkp();
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				
+					// Set instance to invalid
+					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+			}
+		
+			// Check if instance is invalid
+			if(Secp256k1Zkp.instance === Secp256k1Zkp.INVALID)
+			
+				// Return operation failed
+				return Secp256k1Zkp.OPERATION_FAILED;
+			
+			// Initialize result to size of uncompact single-signer signature
+			var result = new Uint8Array(Secp256k1Zkp.instance._uncompactSingleSignerSignatureSize());
+			
+			// Allocate and fill memory
+			var resultBuffer = Secp256k1Zkp.instance._malloc(signature["length"] * signature["BYTES_PER_ELEMENT"]);
+			
+			var signatureBuffer = Secp256k1Zkp.instance._malloc(signature["length"] * signature["BYTES_PER_ELEMENT"]);
+			Secp256k1Zkp.instance["HEAPU8"].set(signature, signatureBuffer / signature["BYTES_PER_ELEMENT"]);
+			
+			// Check if uncompacting single-signer signature failed
+			if(Secp256k1Zkp.instance._uncompactSingleSignerSignature(resultBuffer, signatureBuffer, signature["length"] * signature["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+			
+				// Clear memory
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, signatureBuffer / signature["BYTES_PER_ELEMENT"], signatureBuffer / signature["BYTES_PER_ELEMENT"] + signature["length"]);
+				
+				// Free memory
+				Secp256k1Zkp.instance._free(resultBuffer);
+				Secp256k1Zkp.instance._free(signatureBuffer);
+			
+				// Return operation failed
+				return Secp256k1Zkp.OPERATION_FAILED;
+			}
+			
+			// Get result
+			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(resultBuffer, resultBuffer + result["length"]));
+			
+			// Clear memory
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, signatureBuffer / signature["BYTES_PER_ELEMENT"], signatureBuffer / signature["BYTES_PER_ELEMENT"] + signature["length"]);
+			
+			// Free memory
+			Secp256k1Zkp.instance._free(resultBuffer);
+			Secp256k1Zkp.instance._free(signatureBuffer);
+			
+			// Return result
+			return result;
+		}
+		
 		// Combine public keys
 		static combinePublicKeys(publicKeys) {
 		

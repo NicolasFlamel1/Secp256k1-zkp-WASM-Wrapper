@@ -1,6 +1,6 @@
 {
 	"name": "@nicolasflamel/secp256k1-zkp-wasm",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "WASM wrapper around parts of libsecp256k1-zkp",
 	"main": "dist/secp256k1-zkp.js",
 	"files": [
