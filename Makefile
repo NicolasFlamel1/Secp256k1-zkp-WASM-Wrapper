@@ -1,11 +1,11 @@
 # Library parameters
 NAME = "secp256k1-zkp"
-VERSION = "0.0.5"
+VERSION = "0.0.6"
 CC = "em++"
-CFLAGS = -Wall -D NDEBUG -Oz -finput-charset=UTF-8 -fexec-charset=UTF-8 -funsigned-char -ffunction-sections -fdata-sections -D VERSION=$(VERSION) -I secp256k1-zkp-master/include/ -s MODULARIZE=1 --memory-init-file=0 -s ABORTING_MALLOC=0 -s ALLOW_MEMORY_GROWTH=1 --closure 1 -flto -fno-rtti -fno-exceptions -s NO_FILESYSTEM=1 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_malloc', '_free']" -s EXPORT_NAME="secp256k1Zkp"
+CFLAGS = -Wall -D NDEBUG -Oz -finput-charset=UTF-8 -fexec-charset=UTF-8 -funsigned-char -ffunction-sections -fdata-sections -D VERSION=$(VERSION) -I "./secp256k1-zkp-master/include/" -s MODULARIZE=1 --memory-init-file=0 -s ABORTING_MALLOC=0 -s ALLOW_MEMORY_GROWTH=1 --closure 1 -flto -fno-rtti -fno-exceptions -s NO_FILESYSTEM=1 -s DISABLE_EXCEPTION_CATCHING=1 -s EXPORTED_FUNCTIONS="['_malloc', '_free']" -s EXPORT_NAME="secp256k1Zkp"
 DEPENDENCY_CFLAGS = -D NDEBUG -Oz -finput-charset=UTF-8 -fexec-charset=UTF-8 -funsigned-char -ffunction-sections -fdata-sections -s MODULARIZE=1 --memory-init-file=0 -s ABORTING_MALLOC=0 -s ALLOW_MEMORY_GROWTH=1 --closure 1 -s ENVIRONMENT=web -flto -fno-rtti -fno-exceptions -s NO_FILESYSTEM=1 -s DISABLE_EXCEPTION_CATCHING=1
-LIBS = -L secp256k1-zkp-master/.libs/ -lsecp256k1
-SRCS = "main.cpp"
+LIBS = -L "./secp256k1-zkp-master/.libs/" -lsecp256k1
+SRCS = "./main.cpp"
 PROGRAM_NAME = $(subst $\",,$(NAME))
 
 # Make WASM
@@ -28,15 +28,15 @@ asmjs:
 npm:
 	$(CC) $(CFLAGS) -s WASM=1 -s BINARYEN_ASYNC_COMPILATION=0 -s SINGLE_FILE=1 -o "./wasm.js" $(SRCS) $(LIBS)
 	$(CC) $(CFLAGS) -s WASM=0 -s BINARYEN_ASYNC_COMPILATION=0 -s SINGLE_FILE=1 -o "./asm.js" $(SRCS) $(LIBS)
-	echo "const secp256k1Zkp = (typeof WebAssembly !== \"undefined\") ? require(\"./wasm.js\") : require(\"./asm.js\");" > "./$(PROGRAM_NAME).js"
-	cat "./main.js" >> "./$(PROGRAM_NAME).js"
+	echo "try { module[\"exports\"] = require(\"@nicolasflamel/secp256k1-zkp-native\"); return;} catch(error) {} const secp256k1Zkp = (typeof WebAssembly !== \"undefined\") ? require(\"./wasm.js\") : require(\"./asm.js\");" > "./index.js"
+	cat "./main.js" >> "./index.js"
 	rm -rf "./dist"
 	mkdir "./dist"
-	mv "./$(PROGRAM_NAME).js" "./wasm.js" "./asm.js" "./dist/"
+	mv "./index.js" "./wasm.js" "./asm.js" "./dist/"
 
 # Make clean
 clean:
-	rm -rf "./$(PROGRAM_NAME).js" "./$(PROGRAM_NAME).wasm" "./wasm.js" "./asm.js" "./dist" "./secp256k1-zkp-master" "./master.zip"
+	rm -rf "./$(PROGRAM_NAME).js" "./$(PROGRAM_NAME).wasm" "./index.js" "./wasm.js" "./asm.js" "./dist" "./secp256k1-zkp-master" "./master.zip"
 
 # Make dependencies
 dependencies:

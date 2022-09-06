@@ -1,14 +1,50 @@
 // Header files
-#include <emscripten.h>
 #include <climits>
 #include <cerrno>
 #include <string>
-#include "secp256k1_aggsig.h"
-#include "secp256k1_bulletproofs.h"
-#include "secp256k1_commitment.h"
-#include "secp256k1_ecdh.h"
+
+// Check if using Emscripten
+#ifdef __EMSCRIPTEN__
+
+	// Header files
+	#include <emscripten.h>
+	#include "secp256k1_aggsig.h"
+	#include "secp256k1_bulletproofs.h"
+	#include "secp256k1_commitment.h"
+	#include "secp256k1_ecdh.h"
+
+// Otherwise
+#else
+
+	// Header files
+	extern "C" {
+		#include "secp256k1_aggsig.h"
+		#include "secp256k1_bulletproofs.h"
+		#include "secp256k1_commitment.h"
+		#include "secp256k1_ecdh.h"
+	}
+#endif
 
 using namespace std;
+
+
+// Definitions
+
+// Check if using Emscripten
+#ifdef __EMSCRIPTEN__
+
+	// Export
+	#define EXPORT extern "C"
+
+// Otherwise
+#else
+
+	// Export
+	#define EXPORT
+
+	// Emscripten keepalive
+	#define EMSCRIPTEN_KEEPALIVE
+#endif
 
 
 // Constants
@@ -96,142 +132,142 @@ secp256k1_bulletproof_generators *generators = nullptr;
 // Function prototypes
 
 // Initialize
-extern "C" bool EMSCRIPTEN_KEEPALIVE initialize();
+EXPORT bool EMSCRIPTEN_KEEPALIVE initialize();
 
 // Uninistalize
-extern "C" bool EMSCRIPTEN_KEEPALIVE uninitialize();
+EXPORT bool EMSCRIPTEN_KEEPALIVE uninitialize();
 
 // Blind size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE blindSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE blindSize();
 
 // Blind switch
-extern "C" bool EMSCRIPTEN_KEEPALIVE blindSwitch(uint8_t *result, const uint8_t *blind, size_t blindSize, const char *value);
+EXPORT bool EMSCRIPTEN_KEEPALIVE blindSwitch(uint8_t *result, const uint8_t *blind, size_t blindSize, const char *value);
 
 // Blind sum
-extern "C" bool EMSCRIPTEN_KEEPALIVE blindSum(uint8_t *result, const uint8_t *blinds, size_t blindsSizes[], size_t numberOfBlinds, size_t numberOfPositiveBlinds);
+EXPORT bool EMSCRIPTEN_KEEPALIVE blindSum(uint8_t *result, const uint8_t *blinds, size_t blindsSizes[], size_t numberOfBlinds, size_t numberOfPositiveBlinds);
 
 // Is valid secret key
-extern "C" bool EMSCRIPTEN_KEEPALIVE isValidSecretKey(const uint8_t *secretKey, size_t secretKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE isValidSecretKey(const uint8_t *secretKey, size_t secretKeySize);
 
 // Is valid public key
-extern "C" bool EMSCRIPTEN_KEEPALIVE isValidPublicKey(const uint8_t *publicKey, size_t publicKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE isValidPublicKey(const uint8_t *publicKey, size_t publicKeySize);
 
 // Is valid commit
-extern "C" bool EMSCRIPTEN_KEEPALIVE isValidCommit(const uint8_t *commit, size_t commitSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE isValidCommit(const uint8_t *commit, size_t commitSize);
 
 // Is valid single-signer signature
-extern "C" bool EMSCRIPTEN_KEEPALIVE isValidSingleSignerSignature(const uint8_t *signature, size_t signatureSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE isValidSingleSignerSignature(const uint8_t *signature, size_t signatureSize);
 
 // Bulletproof size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE bulletproofProofSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE bulletproofProofSize();
 
 // Create bulletproof
-extern "C" bool EMSCRIPTEN_KEEPALIVE createBulletproof(uint8_t *proof, char *proofSize, const uint8_t *blind, size_t blindSize, const char *value, const uint8_t *nonce, size_t nonceSize, const uint8_t *privateNonce, size_t privateNonceSize, const uint8_t *extraCommit, size_t extraCommitSize, const uint8_t *message, size_t messageSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE createBulletproof(uint8_t *proof, char *proofSize, const uint8_t *blind, size_t blindSize, const char *value, const uint8_t *nonce, size_t nonceSize, const uint8_t *privateNonce, size_t privateNonceSize, const uint8_t *extraCommit, size_t extraCommitSize, const uint8_t *message, size_t messageSize);
 
 // Create bulletproof blindless
-extern "C" bool EMSCRIPTEN_KEEPALIVE createBulletproofBlindless(uint8_t *proof, char *proofSize, uint8_t *tauX, size_t tauXSize, const uint8_t *tOne, size_t tOneSize, const uint8_t *tTwo, size_t tTwoSize, const uint8_t *commit, size_t commitSize, const char *value, const uint8_t *nonce, size_t nonceSize, const uint8_t *extraCommit, size_t extraCommitSize, const uint8_t *message, size_t messageSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE createBulletproofBlindless(uint8_t *proof, char *proofSize, uint8_t *tauX, size_t tauXSize, const uint8_t *tOne, size_t tOneSize, const uint8_t *tTwo, size_t tTwoSize, const uint8_t *commit, size_t commitSize, const char *value, const uint8_t *nonce, size_t nonceSize, const uint8_t *extraCommit, size_t extraCommitSize, const uint8_t *message, size_t messageSize);
 
 // Bulletproof message size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE bulletproofMessageSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE bulletproofMessageSize();
 
 // Rewind bulletproof
-extern "C" bool EMSCRIPTEN_KEEPALIVE rewindBulletproof(char *value, uint8_t *blind, uint8_t *message, const uint8_t *proof, size_t proofSize, const uint8_t *commit, size_t commitSize, const uint8_t *nonce, size_t nonceSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE rewindBulletproof(char *value, uint8_t *blind, uint8_t *message, const uint8_t *proof, size_t proofSize, const uint8_t *commit, size_t commitSize, const uint8_t *nonce, size_t nonceSize);
 
 // Verify bulletproof
-extern "C" bool EMSCRIPTEN_KEEPALIVE verifyBulletproof(const uint8_t *proof, size_t proofSize, const uint8_t *commit, size_t commitSize, const uint8_t *extraCommit, size_t extraCommitSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE verifyBulletproof(const uint8_t *proof, size_t proofSize, const uint8_t *commit, size_t commitSize, const uint8_t *extraCommit, size_t extraCommitSize);
 
 // Public key size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE publicKeySize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE publicKeySize();
 
 // Public key from secret key
-extern "C" bool EMSCRIPTEN_KEEPALIVE publicKeyFromSecretKey(uint8_t *publicKey, const uint8_t *secretKey, size_t secretKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE publicKeyFromSecretKey(uint8_t *publicKey, const uint8_t *secretKey, size_t secretKeySize);
 
 // Public key from data
-extern "C" bool EMSCRIPTEN_KEEPALIVE publicKeyFromData(uint8_t *publicKey, const uint8_t *data, size_t dataSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE publicKeyFromData(uint8_t *publicKey, const uint8_t *data, size_t dataSize);
 
 // Uncompressed public key size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE uncompressedPublicKeySize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE uncompressedPublicKeySize();
 
 // Uncompress public key
-extern "C" bool EMSCRIPTEN_KEEPALIVE uncompressPublicKey(uint8_t *uncompressedPublicKey, const uint8_t *publicKey, size_t publicKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE uncompressPublicKey(uint8_t *uncompressedPublicKey, const uint8_t *publicKey, size_t publicKeySize);
 
 // Secret key size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE secretKeySize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE secretKeySize();
 
 // Secret key tweak add
-extern "C" bool EMSCRIPTEN_KEEPALIVE secretKeyTweakAdd(uint8_t *secretKey, size_t secretKeySize, const uint8_t *tweak, size_t tweakSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE secretKeyTweakAdd(uint8_t *secretKey, size_t secretKeySize, const uint8_t *tweak, size_t tweakSize);
 
 // Public key tweak add
-extern "C" bool EMSCRIPTEN_KEEPALIVE publicKeyTweakAdd(uint8_t *publicKey, size_t publicKeySize, const uint8_t *tweak, size_t tweakSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE publicKeyTweakAdd(uint8_t *publicKey, size_t publicKeySize, const uint8_t *tweak, size_t tweakSize);
 
 // Secret key tweak multiply
-extern "C" bool EMSCRIPTEN_KEEPALIVE secretKeyTweakMultiply(uint8_t *secretKey, size_t secretKeySize, const uint8_t *tweak, size_t tweakSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE secretKeyTweakMultiply(uint8_t *secretKey, size_t secretKeySize, const uint8_t *tweak, size_t tweakSize);
 
 // Public key tweak multiply
-extern "C" bool EMSCRIPTEN_KEEPALIVE publicKeyTweakMultiply(uint8_t *publicKey, size_t publicKeySize, const uint8_t *tweak, size_t tweakSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE publicKeyTweakMultiply(uint8_t *publicKey, size_t publicKeySize, const uint8_t *tweak, size_t tweakSize);
 
 // Shared secret key from secret key and public key
-extern "C" bool EMSCRIPTEN_KEEPALIVE sharedSecretKeyFromSecretKeyAndPublicKey(uint8_t *sharedSecretKey, const uint8_t *secretKey, size_t secretKeySize, const uint8_t *publicKey, size_t publicKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE sharedSecretKeyFromSecretKeyAndPublicKey(uint8_t *sharedSecretKey, const uint8_t *secretKey, size_t secretKeySize, const uint8_t *publicKey, size_t publicKeySize);
 
 // Commit size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE commitSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE commitSize();
 
 // Pedersen commit
-extern "C" bool EMSCRIPTEN_KEEPALIVE pedersenCommit(uint8_t *result, const uint8_t *blind, size_t blindSize, const char *value);
+EXPORT bool EMSCRIPTEN_KEEPALIVE pedersenCommit(uint8_t *result, const uint8_t *blind, size_t blindSize, const char *value);
 
 // Pedersen commit sum
-extern "C" bool EMSCRIPTEN_KEEPALIVE pedersenCommitSum(uint8_t *result, const uint8_t *positiveCommits, size_t positiveCommitsSizes[], size_t numberOfPositiveCommits, const uint8_t *negativeCommits, size_t negativeCommitsSizes[], size_t numberOfNegativeCommits);
+EXPORT bool EMSCRIPTEN_KEEPALIVE pedersenCommitSum(uint8_t *result, const uint8_t *positiveCommits, size_t positiveCommitsSizes[], size_t numberOfPositiveCommits, const uint8_t *negativeCommits, size_t negativeCommitsSizes[], size_t numberOfNegativeCommits);
 
 // Pedersen commit to public key
-extern "C" bool EMSCRIPTEN_KEEPALIVE pedersenCommitToPublicKey(uint8_t *publicKey, const uint8_t *commit, size_t commitSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE pedersenCommitToPublicKey(uint8_t *publicKey, const uint8_t *commit, size_t commitSize);
 
 // Public key to Pedersen commit
-extern "C" bool EMSCRIPTEN_KEEPALIVE publicKeyToPedersenCommit(uint8_t *commit, const uint8_t *publicKey, size_t publicKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE publicKeyToPedersenCommit(uint8_t *commit, const uint8_t *publicKey, size_t publicKeySize);
 
 // Single-signer signature size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE singleSignerSignatureSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE singleSignerSignatureSize();
 
 // Seed size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE seedSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE seedSize();
 
 // Create single-signer signature
-extern "C" bool EMSCRIPTEN_KEEPALIVE createSingleSignerSignature(uint8_t *signature, const uint8_t *message, size_t messageSize, const uint8_t *secretKey, size_t secretKeySize, const uint8_t *secretNonce, size_t secretNonceSize, const uint8_t *publicKey, size_t publicKeySize, const uint8_t *publicNonce, size_t publicNonceSize, const uint8_t *publicNonceTotal, size_t publicNonceTotalSize, const uint8_t *seed, size_t seedSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE createSingleSignerSignature(uint8_t *signature, const uint8_t *message, size_t messageSize, const uint8_t *secretKey, size_t secretKeySize, const uint8_t *secretNonce, size_t secretNonceSize, const uint8_t *publicKey, size_t publicKeySize, const uint8_t *publicNonce, size_t publicNonceSize, const uint8_t *publicNonceTotal, size_t publicNonceTotalSize, const uint8_t *seed, size_t seedSize);
 
 // Add single-signer signatures
-extern "C" bool EMSCRIPTEN_KEEPALIVE addSingleSignerSignatures(uint8_t *result, const uint8_t *signatures, size_t signaturesSizes[], size_t numberOfSignatures, const uint8_t *publicNonceTotal, size_t publicNonceTotalSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE addSingleSignerSignatures(uint8_t *result, const uint8_t *signatures, size_t signaturesSizes[], size_t numberOfSignatures, const uint8_t *publicNonceTotal, size_t publicNonceTotalSize);
 
 // Verify single-signer signature
-extern "C" bool EMSCRIPTEN_KEEPALIVE verifySingleSignerSignature(const uint8_t *signature, size_t signatureSize, const uint8_t *message, size_t messageSize, const uint8_t *publicNonce, size_t publicNonceSize, const uint8_t *publicKey, size_t publicKeySize, const uint8_t *publicKeyTotal, size_t publicKeyTotalSize, bool isPartial);
+EXPORT bool EMSCRIPTEN_KEEPALIVE verifySingleSignerSignature(const uint8_t *signature, size_t signatureSize, const uint8_t *message, size_t messageSize, const uint8_t *publicNonce, size_t publicNonceSize, const uint8_t *publicKey, size_t publicKeySize, const uint8_t *publicKeyTotal, size_t publicKeyTotalSize, bool isPartial);
 
 // Single-signer signature from data
-extern "C" bool EMSCRIPTEN_KEEPALIVE singleSignerSignatureFromData(uint8_t *signature, const uint8_t *data, size_t dataSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE singleSignerSignatureFromData(uint8_t *signature, const uint8_t *data, size_t dataSize);
 
 // Uncompact single-signer signature size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE uncompactSingleSignerSignatureSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE uncompactSingleSignerSignatureSize();
 
 // Compact single-signer signature
-extern "C" bool EMSCRIPTEN_KEEPALIVE compactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE compactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize);
 
 // Uncompact single-signer signature
-extern "C" bool EMSCRIPTEN_KEEPALIVE uncompactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE uncompactSingleSignerSignature(uint8_t *result, const uint8_t *signature, size_t signatureSize);
 
 // Combine public keys
-extern "C" bool EMSCRIPTEN_KEEPALIVE combinePublicKeys(uint8_t *result, const uint8_t *publicKeys, size_t publicKeysSizes[], size_t numberOfPublicKeys);
+EXPORT bool EMSCRIPTEN_KEEPALIVE combinePublicKeys(uint8_t *result, const uint8_t *publicKeys, size_t publicKeysSizes[], size_t numberOfPublicKeys);
 
 // Nonce size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE nonceSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE nonceSize();
 
 // Create secret nonce
-extern "C" bool EMSCRIPTEN_KEEPALIVE createSecretNonce(uint8_t *nonce, const uint8_t *seed, size_t seedSize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE createSecretNonce(uint8_t *nonce, const uint8_t *seed, size_t seedSize);
 
 // Maximum message hash signature size
-extern "C" size_t EMSCRIPTEN_KEEPALIVE maximumMessageHashSignatureSize();
+EXPORT size_t EMSCRIPTEN_KEEPALIVE maximumMessageHashSignatureSize();
 
 // Create message hash signature
-extern "C" bool EMSCRIPTEN_KEEPALIVE createMessageHashSignature(uint8_t *signature, char *signatureSize, const uint8_t *messageHash, size_t messageHashSize, const uint8_t *secretKey, size_t secretKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE createMessageHashSignature(uint8_t *signature, char *signatureSize, const uint8_t *messageHash, size_t messageHashSize, const uint8_t *secretKey, size_t secretKeySize);
 
 // Verify message hash signature
-extern "C" bool EMSCRIPTEN_KEEPALIVE verifyMessageHashSignature(const uint8_t *signature, size_t signatureSize, const uint8_t *messageHash, size_t messageHashSize, const uint8_t *publicKey, size_t publicKeySize);
+EXPORT bool EMSCRIPTEN_KEEPALIVE verifyMessageHashSignature(const uint8_t *signature, size_t signatureSize, const uint8_t *messageHash, size_t messageHashSize, const uint8_t *publicKey, size_t publicKeySize);
 
 // Is zero array
 static bool isZeroArray(void *value, size_t size);

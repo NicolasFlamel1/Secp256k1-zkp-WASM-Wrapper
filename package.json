@@ -1,8 +1,8 @@
 {
 	"name": "@nicolasflamel/secp256k1-zkp-wasm",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "WASM wrapper around parts of libsecp256k1-zkp",
-	"main": "dist/secp256k1-zkp.js",
+	"main": "dist/index.js",
 	"files": [
 		"dist/*"
 	],
@@ -18,11 +18,14 @@
 		"MimbleWimble Coin",
 		"secp256k1",
 		"secp256k1-zkp",
-		"mimblewimble"		
+		"mimblewimble"
 	],
 	"author": "Nicolas Flamel",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/NicolasFlamel1/Secp256k1-zkp-WASM-Wrapper/issues"
+	},
+	"optionalDependencies": {
+		"@nicolasflamel/secp256k1-zkp-native": "^0.0.6"
 	}
 }
