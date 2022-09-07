@@ -28,7 +28,7 @@ asmjs:
 npm:
 	$(CC) $(CFLAGS) -s WASM=1 -s BINARYEN_ASYNC_COMPILATION=0 -s SINGLE_FILE=1 -o "./wasm.js" $(SRCS) $(LIBS)
 	$(CC) $(CFLAGS) -s WASM=0 -s BINARYEN_ASYNC_COMPILATION=0 -s SINGLE_FILE=1 -o "./asm.js" $(SRCS) $(LIBS)
-	echo "try { global.crypto = require(\"crypto\"); module[\"exports\"] = require(\"@nicolasflamel/secp256k1-zkp-native\"); return;} catch(error) {} const secp256k1Zkp = (typeof WebAssembly !== \"undefined\") ? require(\"./wasm.js\") : require(\"./asm.js\");" > "./index.js"
+	echo "try { global[\"crypto\"] = require(\"crypto\"); module[\"exports\"] = require(\"@nicolasflamel/secp256k1-zkp-native\"); return;} catch(error) {} const secp256k1Zkp = (typeof WebAssembly !== \"undefined\") ? require(\"./wasm.js\") : require(\"./asm.js\");" > "./index.js"
 	cat "./main.js" >> "./index.js"
 	rm -rf "./dist"
 	mkdir "./dist"
