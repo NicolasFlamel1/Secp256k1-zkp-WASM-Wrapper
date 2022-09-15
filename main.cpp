@@ -40,7 +40,7 @@ using namespace std;
 #else
 
 	// Export
-	#define EXPORT
+	#define EXPORT static
 
 	// Emscripten keepalive
 	#define EMSCRIPTEN_KEEPALIVE
@@ -120,13 +120,13 @@ static const size_t TAU_X_SIZE = 32;
 // Global variables
 
 // Context
-secp256k1_context *context = nullptr;
+static secp256k1_context *context = nullptr;
 
 // Scratch space
-secp256k1_scratch_space *scratchSpace = nullptr;
+static secp256k1_scratch_space *scratchSpace = nullptr;
 
 // Generators
-secp256k1_bulletproof_generators *generators = nullptr;
+static secp256k1_bulletproof_generators *generators = nullptr;
 
 
 // Function prototypes
