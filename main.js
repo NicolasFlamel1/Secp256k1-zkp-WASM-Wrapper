@@ -1046,6 +1046,8 @@ class Secp256k1Zkp {
 			var result = new Uint8Array(Secp256k1Zkp.instance._secretKeySize());
 			
 			// Allocate and fill memory
+			var resultBuffer = Secp256k1Zkp.instance._malloc(result["length"] * result["BYTES_PER_ELEMENT"]);
+			
 			var secretKeyBuffer = Secp256k1Zkp.instance._malloc(secretKey["length"] * secretKey["BYTES_PER_ELEMENT"]);
 			Secp256k1Zkp.instance["HEAPU8"].set(secretKey, secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"]);
 			
@@ -1053,13 +1055,15 @@ class Secp256k1Zkp {
 			Secp256k1Zkp.instance["HEAPU8"].set(tweak, tweakBuffer / tweak["BYTES_PER_ELEMENT"]);
 			
 			// Check if performing secret key tweak add failed
-			if(Secp256k1Zkp.instance._secretKeyTweakAdd(secretKeyBuffer, secretKey["length"] * secretKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+			if(Secp256k1Zkp.instance._secretKeyTweakAdd(resultBuffer, secretKeyBuffer, secretKey["length"] * secretKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
 			
 				// Clear memory
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"], secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"] + secretKey["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 				
 				// Free memory
+				Secp256k1Zkp.instance._free(resultBuffer);
 				Secp256k1Zkp.instance._free(secretKeyBuffer);
 				Secp256k1Zkp.instance._free(tweakBuffer);
 			
@@ -1068,13 +1072,15 @@ class Secp256k1Zkp {
 			}
 			
 			// Get result
-			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(secretKeyBuffer, secretKeyBuffer + result["length"]));
+			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(resultBuffer, resultBuffer + result["length"]));
 			
 			// Clear memory
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"], secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"] + secretKey["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 			
 			// Free memory
+			Secp256k1Zkp.instance._free(resultBuffer);
 			Secp256k1Zkp.instance._free(secretKeyBuffer);
 			Secp256k1Zkp.instance._free(tweakBuffer);
 			
@@ -1108,6 +1114,8 @@ class Secp256k1Zkp {
 			var result = new Uint8Array(Secp256k1Zkp.instance._publicKeySize());
 			
 			// Allocate and fill memory
+			var resultBuffer = Secp256k1Zkp.instance._malloc(result["length"] * result["BYTES_PER_ELEMENT"]);
+			
 			var publicKeyBuffer = Secp256k1Zkp.instance._malloc(publicKey["length"] * publicKey["BYTES_PER_ELEMENT"]);
 			Secp256k1Zkp.instance["HEAPU8"].set(publicKey, publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"]);
 			
@@ -1115,13 +1123,15 @@ class Secp256k1Zkp {
 			Secp256k1Zkp.instance["HEAPU8"].set(tweak, tweakBuffer / tweak["BYTES_PER_ELEMENT"]);
 			
 			// Check if performing public key tweak add failed
-			if(Secp256k1Zkp.instance._publicKeyTweakAdd(publicKeyBuffer, publicKey["length"] * publicKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+			if(Secp256k1Zkp.instance._publicKeyTweakAdd(resultBuffer, publicKeyBuffer, publicKey["length"] * publicKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
 			
 				// Clear memory
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"], publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"] + publicKey["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 				
 				// Free memory
+				Secp256k1Zkp.instance._free(resultBuffer);
 				Secp256k1Zkp.instance._free(publicKeyBuffer);
 				Secp256k1Zkp.instance._free(tweakBuffer);
 			
@@ -1130,13 +1140,15 @@ class Secp256k1Zkp {
 			}
 			
 			// Get result
-			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(publicKeyBuffer, publicKeyBuffer + result["length"]));
+			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(resultBuffer, resultBuffer + result["length"]));
 			
 			// Clear memory
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"], publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"] + publicKey["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 			
 			// Free memory
+			Secp256k1Zkp.instance._free(resultBuffer);
 			Secp256k1Zkp.instance._free(publicKeyBuffer);
 			Secp256k1Zkp.instance._free(tweakBuffer);
 			
@@ -1170,6 +1182,8 @@ class Secp256k1Zkp {
 			var result = new Uint8Array(Secp256k1Zkp.instance._secretKeySize());
 			
 			// Allocate and fill memory
+			var resultBuffer = Secp256k1Zkp.instance._malloc(result["length"] * result["BYTES_PER_ELEMENT"]);
+			
 			var secretKeyBuffer = Secp256k1Zkp.instance._malloc(secretKey["length"] * secretKey["BYTES_PER_ELEMENT"]);
 			Secp256k1Zkp.instance["HEAPU8"].set(secretKey, secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"]);
 			
@@ -1177,13 +1191,15 @@ class Secp256k1Zkp {
 			Secp256k1Zkp.instance["HEAPU8"].set(tweak, tweakBuffer / tweak["BYTES_PER_ELEMENT"]);
 			
 			// Check if performing secret key tweak multiply failed
-			if(Secp256k1Zkp.instance._secretKeyTweakMultiply(secretKeyBuffer, secretKey["length"] * secretKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+			if(Secp256k1Zkp.instance._secretKeyTweakMultiply(resultBuffer, secretKeyBuffer, secretKey["length"] * secretKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
 			
 				// Clear memory
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"], secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"] + secretKey["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 				
 				// Free memory
+				Secp256k1Zkp.instance._free(resultBuffer);
 				Secp256k1Zkp.instance._free(secretKeyBuffer);
 				Secp256k1Zkp.instance._free(tweakBuffer);
 			
@@ -1192,13 +1208,15 @@ class Secp256k1Zkp {
 			}
 			
 			// Get result
-			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(secretKeyBuffer, secretKeyBuffer + result["length"]));
+			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(resultBuffer, resultBuffer + result["length"]));
 			
 			// Clear memory
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"], secretKeyBuffer / secretKey["BYTES_PER_ELEMENT"] + secretKey["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 			
 			// Free memory
+			Secp256k1Zkp.instance._free(resultBuffer);
 			Secp256k1Zkp.instance._free(secretKeyBuffer);
 			Secp256k1Zkp.instance._free(tweakBuffer);
 			
@@ -1232,6 +1250,8 @@ class Secp256k1Zkp {
 			var result = new Uint8Array(Secp256k1Zkp.instance._publicKeySize());
 			
 			// Allocate and fill memory
+			var resultBuffer = Secp256k1Zkp.instance._malloc(result["length"] * result["BYTES_PER_ELEMENT"]);
+			
 			var publicKeyBuffer = Secp256k1Zkp.instance._malloc(publicKey["length"] * publicKey["BYTES_PER_ELEMENT"]);
 			Secp256k1Zkp.instance["HEAPU8"].set(publicKey, publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"]);
 			
@@ -1239,13 +1259,15 @@ class Secp256k1Zkp {
 			Secp256k1Zkp.instance["HEAPU8"].set(tweak, tweakBuffer / tweak["BYTES_PER_ELEMENT"]);
 			
 			// Check if performing public key tweak multiply failed
-			if(Secp256k1Zkp.instance._publicKeyTweakMultiply(publicKeyBuffer, publicKey["length"] * publicKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+			if(Secp256k1Zkp.instance._publicKeyTweakMultiply(resultBuffer, publicKeyBuffer, publicKey["length"] * publicKey["BYTES_PER_ELEMENT"], tweakBuffer, tweak["length"] * tweak["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
 			
 				// Clear memory
+				Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"], publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"] + publicKey["length"]);
 				Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 				
 				// Free memory
+				Secp256k1Zkp.instance._free(resultBuffer);
 				Secp256k1Zkp.instance._free(publicKeyBuffer);
 				Secp256k1Zkp.instance._free(tweakBuffer);
 			
@@ -1254,13 +1276,15 @@ class Secp256k1Zkp {
 			}
 			
 			// Get result
-			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(publicKeyBuffer, publicKeyBuffer + result["length"]));
+			result = new Uint8Array(Secp256k1Zkp.instance["HEAPU8"].subarray(resultBuffer, resultBuffer + result["length"]));
 			
 			// Clear memory
+			Secp256k1Zkp.instance["HEAPU8"].fill(0, resultBuffer / result["BYTES_PER_ELEMENT"], resultBuffer / result["BYTES_PER_ELEMENT"] + result["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"], publicKeyBuffer / publicKey["BYTES_PER_ELEMENT"] + publicKey["length"]);
 			Secp256k1Zkp.instance["HEAPU8"].fill(0, tweakBuffer / tweak["BYTES_PER_ELEMENT"], tweakBuffer / tweak["BYTES_PER_ELEMENT"] + tweak["length"]);
 			
 			// Free memory
+			Secp256k1Zkp.instance._free(resultBuffer);
 			Secp256k1Zkp.instance._free(publicKeyBuffer);
 			Secp256k1Zkp.instance._free(tweakBuffer);
 			
