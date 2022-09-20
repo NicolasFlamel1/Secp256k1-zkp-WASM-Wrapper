@@ -1709,7 +1709,7 @@ class Secp256k1Zkp {
 			var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
 			Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
 			
-			// Check if creating signle-signer signature failed
+			// Check if creating single-signer signature failed
 			if(Secp256k1Zkp.instance._createSingleSignerSignature(signatureBuffer, messageBuffer, message["length"] * message["BYTES_PER_ELEMENT"], secretKeyBuffer, secretKey["length"] * secretKey["BYTES_PER_ELEMENT"], (secretNonce !== Secp256k1Zkp.NO_SECRET_NONCE) ? secretNonceBuffer : Secp256k1Zkp.C_NULL, (secretNonce !== Secp256k1Zkp.NO_SECRET_NONCE) ? secretNonce["length"] * secretNonce["BYTES_PER_ELEMENT"] : 0, publicKeyBuffer, publicKey["length"] * publicKey["BYTES_PER_ELEMENT"], (publicNonce !== Secp256k1Zkp.NO_PUBLIC_NONCE) ? publicNonceBuffer : Secp256k1Zkp.C_NULL, (publicNonce !== Secp256k1Zkp.NO_PUBLIC_NONCE) ? publicNonce["length"] * publicNonce["BYTES_PER_ELEMENT"] : 0, (publicNonceTotal !== Secp256k1Zkp.NO_PUBLIC_NONCE_TOTAL) ? publicNonceTotalBuffer : Secp256k1Zkp.C_NULL, (publicNonceTotal !== Secp256k1Zkp.NO_PUBLIC_NONCE_TOTAL) ? publicNonceTotal["length"] * publicNonceTotal["BYTES_PER_ELEMENT"] : 0, seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
 			
 				// Clear memory
@@ -1929,7 +1929,7 @@ class Secp256k1Zkp {
 			var publicKeyTotalBuffer = Secp256k1Zkp.instance._malloc(publicKeyTotal["length"] * publicKeyTotal["BYTES_PER_ELEMENT"]);
 			Secp256k1Zkp.instance["HEAPU8"].set(publicKeyTotal, publicKeyTotalBuffer / publicKeyTotal["BYTES_PER_ELEMENT"]);
 			
-			// Check if signle-signer signature isn't verified
+			// Check if single-signer signature isn't verified
 			if(Secp256k1Zkp.instance._verifySingleSignerSignature(signatureBuffer, signature["length"] * signature["BYTES_PER_ELEMENT"], messageBuffer, message["length"] * message["BYTES_PER_ELEMENT"], (publicNonce !== Secp256k1Zkp.NO_PUBLIC_NONCE) ? publicNonceBuffer : Secp256k1Zkp.C_NULL, (publicNonce !== Secp256k1Zkp.NO_PUBLIC_NONCE) ? publicNonce["length"] * publicNonce["BYTES_PER_ELEMENT"] : 0, publicKeyBuffer, publicKey["length"] * publicKey["BYTES_PER_ELEMENT"], publicKeyTotalBuffer, publicKeyTotal["length"] * publicKeyTotal["BYTES_PER_ELEMENT"], Secp256k1Zkp.booleanToCBoolean(isPartial)) === Secp256k1Zkp.C_FALSE) {
 			
 				// Clear memory

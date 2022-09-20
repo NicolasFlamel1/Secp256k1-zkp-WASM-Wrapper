@@ -38,7 +38,7 @@ clean:
 dependencies:
 	wget "https://github.com/NicolasFlamel1/secp256k1-zkp/archive/master.zip"
 	unzip "./master.zip"
-	cd "./secp256k1-zkp-master" && "./autogen.sh" && emconfigure "./configure" --enable-endomorphism --build=none --host=none CFLAGS="$(DEPENDENCY_CFLAGS)" CPPFLAGS="$(DEPENDENCY_CFLAGS)" CXXFLAGS="$(DEPENDENCY_CFLAGS)" --disable-shared CFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" CPPFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" CXXFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" LDFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" && emmake make
+	cd "./secp256k1-zkp-master" && "./autogen.sh" && emconfigure "./configure" --enable-endomorphism --enable-module-ecdh --enable-experimental --enable-module-generator --enable-module-commitment --enable-module-bulletproof --enable-module-aggsig --with-bignum=no --with-asm=no --disable-benchmark --disable-tests --disable-exhaustive-tests --build=none --host=none CFLAGS="$(DEPENDENCY_CFLAGS)" CPPFLAGS="$(DEPENDENCY_CFLAGS)" CXXFLAGS="$(DEPENDENCY_CFLAGS)" --disable-shared CFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" CPPFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" CXXFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" LDFLAGS_FOR_BUILD="$(DEPENDENCY_CFLAGS)" && emmake make
 	rm "./master.zip"
 	wget "https://github.com/NicolasFlamel1/Secp256k1-zkp-NPM-Package/archive/master.zip"
 	unzip "./master.zip"
