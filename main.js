@@ -37,16 +37,45 @@ class Secp256k1Zkp {
 				
 					// Prevent on abort from being called
 					delete settings["onAbort"];
+					
+					// Initialize seed to size of seed
+					var seed = new Uint8Array(instance._seedSize());
+					
+					// Fill seed with random values
+					crypto.getRandomValues(seed);
+					
+					// Allocate and fill memory
+					var seedBuffer = instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+					instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
 				
 					// Check if initializing failed
-					if(instance._initialize() === Secp256k1Zkp.C_FALSE)
+					if(instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
 					
+						// Clear memory
+						instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+						
+						// Free memory
+						instance._free(seedBuffer);
+						
+						// Clear seed
+						seed.fill(0);
+						
 						// Reject error
 						reject("Failed to initialize");
+					}
 					
 					// Otherwise
 					else {
 					
+						// Clear memory
+						instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+						
+						// Free memory
+						instance._free(seedBuffer);
+						
+						// Clear seed
+						seed.fill(0);
+						
 						// Set instance
 						Secp256k1Zkp.instance = instance;
 					
@@ -79,11 +108,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -149,11 +211,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -244,11 +339,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -293,11 +421,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -342,11 +503,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -391,11 +585,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -440,11 +667,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -550,11 +810,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -674,11 +967,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -783,11 +1109,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -846,11 +1205,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -907,11 +1299,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -968,11 +1393,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1029,11 +1487,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1097,11 +1588,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1165,11 +1689,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1233,11 +1790,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1301,11 +1891,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1369,11 +1992,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1439,11 +2095,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1559,11 +2248,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1620,11 +2342,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1681,11 +2436,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1771,6 +2559,9 @@ class Secp256k1Zkp {
 					Secp256k1Zkp.instance._free(publicNonceTotalBuffer);
 				
 				Secp256k1Zkp.instance._free(seedBuffer);
+				
+				// Clear seed
+				seed.fill(0);
 			
 				// Return operation failed
 				return Secp256k1Zkp.OPERATION_FAILED;
@@ -1815,6 +2606,9 @@ class Secp256k1Zkp {
 			
 			Secp256k1Zkp.instance._free(seedBuffer);
 			
+			// Clear seed
+			seed.fill(0);
+			
 			// Return signature
 			return signature;
 		}
@@ -1828,11 +2622,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -1922,11 +2749,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -2013,11 +2873,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -2074,11 +2967,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -2135,11 +3061,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -2196,11 +3155,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -2283,11 +3275,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -2321,6 +3346,9 @@ class Secp256k1Zkp {
 				// Free memory
 				Secp256k1Zkp.instance._free(nonceBuffer);
 				Secp256k1Zkp.instance._free(seedBuffer);
+				
+				// Clear seed
+				seed.fill(0);
 			
 				// Return operation failed
 				return Secp256k1Zkp.OPERATION_FAILED;
@@ -2337,6 +3365,9 @@ class Secp256k1Zkp {
 			Secp256k1Zkp.instance._free(nonceBuffer);
 			Secp256k1Zkp.instance._free(seedBuffer);
 			
+			// Clear seed
+			seed.fill(0);
+			
 			// Return nonce
 			return nonce;
 		}
@@ -2350,11 +3381,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
@@ -2430,11 +3494,44 @@ class Secp256k1Zkp {
 				// Set instance
 				Secp256k1Zkp.instance = secp256k1Zkp();
 				
-				// Check if initializing failed
-				if(Secp256k1Zkp.instance._initialize() === Secp256k1Zkp.C_FALSE)
+				// Initialize seed to size of seed
+				var seed = new Uint8Array(Secp256k1Zkp.instance._seedSize());
 				
+				// Fill seed with random values
+				crypto.getRandomValues(seed);
+				
+				// Allocate and fill memory
+				var seedBuffer = Secp256k1Zkp.instance._malloc(seed["length"] * seed["BYTES_PER_ELEMENT"]);
+				Secp256k1Zkp.instance["HEAPU8"].set(seed, seedBuffer / seed["BYTES_PER_ELEMENT"]);
+				
+				// Check if initializing failed
+				if(Secp256k1Zkp.instance._initialize(seedBuffer, seed["length"] * seed["BYTES_PER_ELEMENT"]) === Secp256k1Zkp.C_FALSE) {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+					
 					// Set instance to invalid
 					Secp256k1Zkp.instance = Secp256k1Zkp.INVALID;
+				}
+				
+				// Otherwise
+				else {
+				
+					// Clear memory
+					Secp256k1Zkp.instance["HEAPU8"].fill(0, seedBuffer / seed["BYTES_PER_ELEMENT"], seedBuffer / seed["BYTES_PER_ELEMENT"] + seed["length"]);
+					
+					// Free memory
+					Secp256k1Zkp.instance._free(seedBuffer);
+					
+					// Clear seed
+					seed.fill(0);
+				}
 			}
 		
 			// Check if instance is invalid
