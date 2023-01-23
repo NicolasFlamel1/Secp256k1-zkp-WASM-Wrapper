@@ -27,7 +27,7 @@ npm:
 	mkdir "./dist"
 	$(CC) $(CFLAGS) -s WASM=1 -s BINARYEN_ASYNC_COMPILATION=0 -s SINGLE_FILE=1 -o "./dist/wasm.js" $(SRCS) $(LIBS)
 	$(CC) $(CFLAGS) -s WASM=0 -s BINARYEN_ASYNC_COMPILATION=0 -s SINGLE_FILE=1 -o "./dist/asm.js" $(SRCS) $(LIBS)
-	echo "\"use strict\"; const crypto = require(\"node:crypto\")[\"webcrypto\"]; const secp256k1Zkp = (typeof WebAssembly !== \"undefined\") ? require(\"./wasm.js\") : require(\"./asm.js\");" > "./dist/index.js"
+	echo "\"use strict\"; const crypto = require(\"crypto\")[\"webcrypto\"]; const secp256k1Zkp = (typeof WebAssembly !== \"undefined\") ? require(\"./wasm.js\") : require(\"./asm.js\");" > "./dist/index.js"
 	cat "./main.js" >> "./dist/index.js"
 
 # Make clean
